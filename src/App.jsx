@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import Header from './components/Header'
-import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './views/Home';
 import Error from './views/Error';
 import Movie from './views/Movie';
@@ -25,6 +25,7 @@ function App() {
 
   return (
     <>
+      <BrowserRouter>
       <Header/>
       <Routes>
       <Route exact path="/" element={<Home movies={movies}/>} />
@@ -33,6 +34,7 @@ function App() {
       <Route path="/movie/:id" element={<Movie/>} />
       <Route path="*" element={<Error />} />
       </Routes>
+      </BrowserRouter>
     </>
   )
 }
