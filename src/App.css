@@ -220,3 +220,29 @@ main h2 {
 .movie-info p:nth-child(3) {
   text-align: right;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.main-movie {
+  margin-top: 70px;
+}
+
+.main-movie img {
+  height: 50vh;
+  width: 100vw;
+}
+
+.main-movie h2 {
+  margin: 0;
+}
