@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import Banner from './components/Banner'
 import Header from './components/Header'
-import LatestMovies from './components/LatestMovies'
+import { Route, Routes } from 'react-router-dom';
+import Home from './views/Home';
+import Error from './views/Error';
+import Movie from './views/Movie';
 
 function App() {
 
@@ -24,8 +26,13 @@ function App() {
   return (
     <>
       <Header/>
-      <Banner />
-      <LatestMovies movies={movies}/>
+      <Routes>
+      <Route exact path="/" element={<Home movies={movies}/>} />
+      <Route path="/home" element={<Home movies={movies}/>} />
+{/*       <Route path="/search/:id" element={<Home movies={movies}/>} /> */}
+      <Route path="/movie/:id" element={<Movie/>} />
+      <Route path="*" element={<Error />} />
+      </Routes>
     </>
   )
 }
