@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 
 const Movie = () => {
+
+  const navigate = useNavigate()
+
+  const handleBack = () => {
+    navigate(-1)
+  }
 
   const location = useLocation();
   const props = location.state;
@@ -20,7 +27,10 @@ const Movie = () => {
 
   return (
     <main className='main-movie'>
+      <button onClick={handleBack}>back</button>
+      <img src={`https://image.tmdb.org/t/p/original${movieData.poster_path}`} alt="" />
       <h2>{movieData.title}</h2>
+      <p>{movieData.overview}</p>
     </main>
   )
 }
