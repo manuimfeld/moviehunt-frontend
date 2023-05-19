@@ -1,11 +1,13 @@
 import CardMovie from "./CardMovie"
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-const LatestMovies = ({movies}) => {
+const LatestMovies = () => {
+  const {moviesArr} = useSelector((state) => state.moviesArr)
+
   return (
     <main className="cardMovie-container">
         <h2>Ultimas películas</h2>
-        {movies.length > 0 ? movies[0].map((movie) => {
+        {moviesArr.length > 0 ? moviesArr.map((movie) => {
             return (
                 <CardMovie key={movie.id} movieData={movie}/>
             )
@@ -13,9 +15,4 @@ const LatestMovies = ({movies}) => {
     </main>
   )
 }
-
-LatestMovies.propTypes = {
-    movies: PropTypes.array.isRequired
-  };
-
 export default LatestMovies
