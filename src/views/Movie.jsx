@@ -1,63 +1,83 @@
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMovieDetailsApi } from '../api/getMovieDetails';
+import { getSimilarMoviesApi } from '../api/getSimilarMovies';
 import CardMovie from '../components/CardMovie';
+import PropTypes from 'prop-types';
 
 const Movie = () => {
-
-  const [movieDetails, setMovieDetails] = useState({})
-  const [similar, setSimilar] = useState([])
-
-
-  // Get props received for react router
-  const location = useLocation();
-  const props = location.state;
-
-  console.log(movieDetails)
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-
-    // Set props in state movieData
-    if (props !== null) {
-      setMovieDetails(props)
-      
-      const options = {method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNDg5MWQzZjJjN2I5YWNiZGNhNzA5NTAyN2UyOTA3NiIsInN1YiI6IjYyZTc0YTVlNjc4MjU5MDA1OGZhMTk3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.W-XsOe2vA8yn2s2Yr5-vCj85kcgvWj2f39Q3fWbFkt0'
-      }}
-
-      movieDetails.id !== undefined ? 
-      fetch(`https://api.themoviedb.org/3/movie/${movieDetails.id}/similar?language=es-ES&page=1`, options)
-      .then(response => response.json())
-      .then(response => setSimilar([response.results]))
-      .catch(err => console.error(err)) : null
-    }
-  }, [props, movieDetails])
-
   // Back page route, on click button
   const navigate = useNavigate()
   const handleBack = () => {
     navigate(-1)
   }
 
+  // Get props received (props contains details movie) for react router
+  const location = useLocation();
+  const props = location.state;
+
+  // Get id params (if props already undefined or null, call api for get details movie)
+  const {id}  = useParams();
+
+  // Dispatch and get states
+  const dispatch = useDispatch();
+  const {movieData} = useSelector((state) => state.movieData)
+  const {similarArr} = useSelector((state) => state.similarArr)
+
+  useEffect(() => {
+    // when navigating in different routes/pages, it will always appear on top
+    window.scrollTo(0, 0)
+    // call api for get similar movies
+    getSimilarMoviesApi(id, dispatch)
+
+    // If props is null, call api for get movie data
+    if (props == null) {
+      getMovieDetailsApi(id, dispatch)
+    } 
+  }, [dispatch, id, props])
+
   return (
     <main className='cardMovie-container mt70'>
-      <button onClick={handleBack}>back</button>
-      <img src={`https://image.tmdb.org/t/p/original${movieDetails.poster_path}`} alt="" className='banner-movie'/>
-      <h2>{movieDetails.title}</h2>
-      <p>{movieDetails.overview}</p>
+      <button onClick={handleBack}>Back</button>
+      {
+        // if props no have data, get data for redux state
+        props === null ? (
+          <>
+            <img src={`https://image.tmdb.org/t/p/original${movieData.poster_path}`} alt="" className='banner-movie'/>
+            <h2>{movieData.title}</h2>
+            <p>{movieData.overview}</p> 
+          </>
+          ) : 
+        // if props have data, render this 
+          <>
+            <img src={`https://image.tmdb.org/t/p/original${props.poster_path}`} alt="" className='banner-movie'/>
+            <h2>{props.title}</h2>
+            <p>{props.overview}</p> 
+          </>
+      }
       <button>Ver trailer</button>
       <section className='cardMovie-container'>
         <h3>Películas similares</h3>
-      {similar.length > 0 ? similar[0].map((movie) => {
-        return (
-          <CardMovie movieData={movie} key={movie.id} />
-        )
-      }) : null}
+      { 
+         similarArr.map((movie) => {
+          return (
+            <CardMovie movieData={movie} key={movie.id} />
+          )
+        }) 
+      }
       </section>
     </main>
   )
 }
+
+// PropTypes defined for props received by react-router
+Movie.propTypes = {
+  props: PropTypes.object.isRequired,
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  overview: PropTypes.string.isRequired,
+  poster_path: PropTypes.string.isRequired,
+};
 
 export default Movie
