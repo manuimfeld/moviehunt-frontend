@@ -147,7 +147,7 @@ header nav ul {
 
 
 
-main {
+.cardMovie-container {
   box-sizing: border-box;
   width: 100vw;
   padding: 0 20px;
@@ -159,7 +159,7 @@ main {
   align-content: flex-start;
 }
 
-main h2 {
+.cardMovie-container h2 {
   margin: 20px auto 0 0;
   height: fit-content;
 }
@@ -234,15 +234,16 @@ main h2 {
 
 
 
-.main-movie {
-  margin-top: 70px;
-}
 
-.main-movie img {
+.banner-movie {
   height: 50vh;
   width: 100vw;
 }
 
 .main-movie h2 {
   margin: 0;
+}
+
+.mt70 {
+  margin-top: 70px;
 }
