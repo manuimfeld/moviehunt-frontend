@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getMovieDetailsApi } from '../api/getMovieDetails';
 import { getSimilarMoviesApi } from '../api/getSimilarMovies';
 import CardMovie from '../components/CardMovie';
-import PropTypes from 'prop-types';
 
 const Movie = () => {
   // Back page route, on click button
@@ -71,13 +70,6 @@ const Movie = () => {
   )
 }
 
-// PropTypes defined for props received by react-router
-Movie.propTypes = {
-  props: PropTypes.object.isRequired,
-  id: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  overview: PropTypes.string.isRequired,
-  poster_path: PropTypes.string.isRequired,
-};
+
 
 export default Movie
