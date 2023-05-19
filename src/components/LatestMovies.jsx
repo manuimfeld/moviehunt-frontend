@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const LatestMovies = ({movies}) => {
   return (
-    <main>
+    <main className="cardMovie-container">
         <h2>Ultimas películas</h2>
         {movies.length > 0 ? movies[0].map((movie) => {
             return (
