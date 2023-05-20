@@ -27,37 +27,45 @@ const Movie = () => {
   useEffect(() => {
     // when navigating in different routes/pages, it will always appear on top
     window.scrollTo(0, 0)
-    // call api for get similar movies
-    getSimilarMoviesApi(id, dispatch)
-
-    // If props is null, call api for get movie data
-    if (props == null) {
-      getMovieDetailsApi(id, dispatch)
-    } 
-  }, [dispatch, id, props])
+   
+    
+    if (props !== null) {
+      // call api for get similar movies
+      getMovieDetailsApi(id, dispatch, navigate)
+      // If props is null, call api for get movie data
+      getSimilarMoviesApi(id, dispatch)
+    } else {
+      getSimilarMoviesApi(id, dispatch)
+    }
+  }, [dispatch, id, props, navigate])
 
   return (
-    <main className='cardMovie-container mt70'>
+    <main className='movie-container mt70'>
       <button onClick={handleBack}>Back</button>
       {
         // if props no have data, get data for redux state
         props === null ? (
           <>
-            <img src={`https://image.tmdb.org/t/p/original${movieData.poster_path}`} alt="" className='banner-movie'/>
+            <img src={`https://image.tmdb.org/t/p/original${movieData.poster_path}`} alt="" className='backdrop-movie'/>
+            <div className="movie-info-container">
             <h2>{movieData.title}</h2>
             <p>{movieData.overview}</p> 
+            <span>{}</span>
+            </div>
+  
           </>
           ) : 
         // if props have data, render this 
           <>
-            <img src={`https://image.tmdb.org/t/p/original${props.poster_path}`} alt="" className='banner-movie'/>
+            <img src={`https://image.tmdb.org/t/p/original${props.poster_path}`} alt="" className='backdrop-movie'/>
+            <div className="movie-info-container">
             <h2>{props.title}</h2>
             <p>{props.overview}</p> 
+            </div>
           </>
       }
-      <button>Ver trailer</button>
       <section className='cardMovie-container'>
-        <h3>Películas similares</h3>
+        <h2>Películas similares</h2>
       { 
          similarArr.map((movie) => {
           return (
