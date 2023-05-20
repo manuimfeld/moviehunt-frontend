@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getDetail } from "../redux/detailSlice";
 
-export const getMovieDetailsApi = (id, dispatch) => {
+export const getMovieDetailsApi = (id, dispatch, navigate) => {
   axios
     .get(`https://api.themoviedb.org/3/movie/${id}?language=es-ES`, {
       headers: {
@@ -10,5 +10,5 @@ export const getMovieDetailsApi = (id, dispatch) => {
       },
     })
     .then((response) => dispatch(getDetail(response.data)))
-    .catch((error) => console.error(error));
+    .catch(() => navigate("/error"));
 };
