@@ -1,6 +1,12 @@
+import { Link } from "react-router-dom"
+
 const Error = () => {
   return (
-    <div>Error</div>
+    <main>
+      <h2>Error</h2>
+      <p>Ha ocurrido un error inesperado</p>
+      <Link to="/home">Volver a la página principal</Link>
+    </main>
   )
 }
 
