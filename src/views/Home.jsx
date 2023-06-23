@@ -1,14 +1,12 @@
-import Banner from '../components/Banner'
-import LatestMovies from '../components/LatestMovies'
-
+import Banner from "../components/Banner";
+import LatestMovies from "../components/LatestMovies";
 
 const Home = () => {
-
   return (
     <>
-    <Banner />
-    <LatestMovies/>
+      {/* <Banner /> */}
+      <LatestMovies />
     </>
-  )
-}
-export default Home
+  );
+};
+export default Home;

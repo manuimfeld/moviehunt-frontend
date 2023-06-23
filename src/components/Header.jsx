@@ -1,41 +1,21 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
-import {FaList, FaHome, FaHeart, FaSistrix} from "react-icons/fa"
+import { Link } from "react-router-dom";
+import { FaList, FaHome, FaHeart, FaSistrix } from "react-icons/fa";
+import { useState } from "react";
 
 const Header = () => {
-
-  const [menuOpen, setMenuOpen] = useState(false)
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen)
-  }
+  const [openMenu, setOpenMenu] = useState(false);
 
   return (
-    <header>
-        {menuOpen && (
-          <nav className={menuOpen != true ? "closed" : null}>
-          <h2>MENÚ</h2>
-          <ul>
-            <li>
-              <FaHome />
-              <Link to="/home">Inicio</Link>
-            </li>
-            <li>
-              <FaSistrix />
-              <Link to="/search">Buscar</Link>
-              </li>
-            <li>
-              <FaHeart />
-              <Link to="/favorites">Favoritos</Link>
-              </li>
-          </ul>
-          <div className="menu-glass" onClick={toggleMenu}></div>
-          </nav>
-        )}
-        <button onClick={toggleMenu}><FaList /></button>
-        <h1>MovieHUNT</h1>
-    </header>
-  )
-}
+    <nav className="p-5 bg-[#137547]">
+      {/* <FaList onClick={() => setOpenMenu(!openMenu)} />
+           {/* <FaHome />
+      <Link to="/home">Inicio</Link>
+      <FaSistrix />
+      <Link to="/search">Buscar</Link>
+      <FaHeart />
+      <Link to="/favorites">Favoritos</Link> */}
+    </nav>
+  );
+};
 
-export default Header
+export default Header;
