@@ -31,12 +31,12 @@ const Movie = () => {
     if (props !== null) {
       getSimilarMoviesApi(id, dispatch);
     } else {
-      return () => {
-        getMovieDetailsApi(id, dispatch, navigate);
-        getSimilarMoviesApi(id, dispatch);
-      };
+      getMovieDetailsApi(id, dispatch, navigate);
+      getSimilarMoviesApi(id, dispatch);
     }
   }, [dispatch, id, props, navigate]);
+
+  console.log(movieData);
 
   return (
     <main className="bg-[#222831] flex flex-row flex-wrap mh-[100vh] lg:justify-center">
@@ -56,7 +56,11 @@ const Movie = () => {
               <p className="w-full text-gray-400">Sinopsis:</p>
               <p className="text-white">{movieData.overview}</p>
               <p className="mt-5 text-gray-400">Calificación: &nbsp;</p>
-              <p className="mt-5">{movieData.vote_average.toFixed(1)}</p>
+              <p className="mt-5">
+                {movieData.vote_average !== undefined
+                  ? movieData.vote_average.toFixed(1)
+                  : ""}
+              </p>
             </div>
           </>
         ) : (
