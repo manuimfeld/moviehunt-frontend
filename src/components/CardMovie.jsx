@@ -46,9 +46,14 @@ const CardMovie = ({ movieData, favorite }) => {
           <p className="absolute top-0 right-0 px-2 bg-[#393E46] text-[#EEEEEE] text-base">
             {movieData.vote_average.toFixed(1)}
           </p>
-          <p className="text-[#EEEEEE]" onClick={handleFavorite}>
+          <p
+            className="flex justify-between items-center w-[40%] text-[#EEEEEE]"
+            onClick={handleFavorite}
+          >
             Agregar
-            <FaHeart className={favorite ? "text-red-700" : "text-gray-400"} />
+            <FaHeart
+              className={` ${favorite ? "text-red-700" : "text-gray-400"}`}
+            />
           </p>
 
           <ToastContainer position="bottom-center" autoClose={2000} />

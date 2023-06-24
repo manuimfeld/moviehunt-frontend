@@ -5,7 +5,7 @@ const LatestMovies = () => {
   const { moviesArr } = useSelector((state) => state.moviesArr);
 
   return (
-    <main className="bg-[#222831]">
+    <main className="bg-[#222831] min-h-[calc(100vh-120px)]">
       <h2 className="py-2.5 text-[#00ADB5] text-2xl font-bold text-center">
         Ultimas películas
       </h2>

@@ -37,9 +37,6 @@ const Movie = () => {
 
   return (
     <main className="bg-[#222831] flex flex-row flex-wrap mh-[100vh] lg:justify-center">
-      {/* <button onClick={handleBack} className="bg-white">
-        Volver
-      </button> */}
       {
         // if props no have data, get data for redux state
         props === null ? (

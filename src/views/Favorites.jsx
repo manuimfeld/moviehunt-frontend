@@ -9,6 +9,8 @@ const Favorites = () => {
   const { favoriteArr } = useSelector((state) => state.favoriteArr);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     // If favorites array already exist in localStorage, set array in store
     if (localStorage.getItem("favorites") !== null) {
       dispatch(getFavorite(JSON.parse(localStorage.getItem("favorites"))));
