@@ -24,7 +24,6 @@ const CardMovie = ({ movieData, favorite }) => {
 
   const handleFavorite = (e) => {
     toggleFavorite(movieData, dispatch);
-    console.log(e.target.innerText);
     notify(e.target.innerText);
   };
 
@@ -50,9 +49,11 @@ const CardMovie = ({ movieData, favorite }) => {
             className="flex justify-between items-center w-[40%] text-[#EEEEEE]"
             onClick={handleFavorite}
           >
-            Agregar
+            {favorite == -1 ? "Agregar" : "Eliminar"}
             <FaHeart
-              className={` ${favorite ? "text-red-700" : "text-gray-400"}`}
+              className={` ${
+                favorite == -1 ? "text-gray-400" : "text-red-700"
+              }`}
             />
           </p>
 

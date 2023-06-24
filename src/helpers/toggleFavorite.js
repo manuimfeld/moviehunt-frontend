@@ -19,3 +19,8 @@ export const toggleFavorite = (movie, dispatch) => {
   localStorage.setItem("favorites", JSON.stringify(favorites));
   dispatch(getFavorite(JSON.parse(localStorage.getItem("favorites"))));
 };
+
+export const isFavorite = (movieId, favoriteArr) => {
+  // If return -1, movie not exist in favoriteArr
+  return favoriteArr.findIndex((movie) => movie.id === movieId);
+};
