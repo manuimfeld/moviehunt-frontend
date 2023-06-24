@@ -1,6 +1,6 @@
 import { getFavorite } from "../redux/favoriteSlice";
 
-const toggleFavorite = (movie, dispatch) => {
+export const toggleFavorite = (movie, dispatch) => {
   // Get array from localStorage
   const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
@@ -19,5 +19,3 @@ const toggleFavorite = (movie, dispatch) => {
   localStorage.setItem("favorites", JSON.stringify(favorites));
   dispatch(getFavorite(JSON.parse(localStorage.getItem("favorites"))));
 };
-
-export default toggleFavorite;

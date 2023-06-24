@@ -5,8 +5,10 @@ const LatestMovies = () => {
   const { moviesArr } = useSelector((state) => state.moviesArr);
 
   return (
-    <main className="bg-yellow-200">
-      <h2>Ultimas películas</h2>
+    <main className="bg-[#222831]">
+      <h2 className="py-2.5 text-[#00ADB5] text-2xl font-bold text-center">
+        Ultimas películas
+      </h2>
       <div className="flex w-auto h-auto flex-wrap justify-around">
         {moviesArr.length > 0
           ? moviesArr.map((movie) => {

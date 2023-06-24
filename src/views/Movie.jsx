@@ -6,16 +6,9 @@ import { getSimilarMoviesApi } from "../api/getSimilarMovies";
 import CardMovie from "../components/CardMovie";
 
 const Movie = () => {
-  // Back page route, on click button
   const navigate = useNavigate();
-  const handleBack = () => {
-    navigate(-1);
-  };
-
-  // Get props received (props contains details movie) for react router
   const location = useLocation();
   const props = location.state;
-
   // Get id params (if props already undefined or null, call api for get details movie)
   const { id } = useParams();
 
@@ -24,23 +17,29 @@ const Movie = () => {
   const { movieData } = useSelector((state) => state.movieData);
   const { similarArr } = useSelector((state) => state.similarArr);
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   useEffect(() => {
     // when navigating in different routes/pages, it will always appear on top
     window.scrollTo(0, 0);
 
     if (props !== null) {
-      // call api for get similar movies
-      getMovieDetailsApi(id, dispatch, navigate);
-      // If props is null, call api for get movie data
       getSimilarMoviesApi(id, dispatch);
     } else {
-      getSimilarMoviesApi(id, dispatch);
+      return async () => {
+        await getMovieDetailsApi(id, dispatch, navigate);
+        getSimilarMoviesApi(id, dispatch);
+      };
     }
   }, [dispatch, id, props, navigate]);
 
   return (
-    <main className="movie-container">
-      <button onClick={handleBack}>Back</button>
+    <main className="bg-[#222831] flex flex-row flex-wrap mh-[100vh] lg:justify-center">
+      {/* <button onClick={handleBack} className="bg-white">
+        Volver
+      </button> */}
       {
         // if props no have data, get data for redux state
         props === null ? (
@@ -48,12 +47,16 @@ const Movie = () => {
             <img
               src={`https://image.tmdb.org/t/p/original${movieData.poster_path}`}
               alt=""
-              className="backdrop-movie"
+              className="w-full h-[90vh] lg:w-[30%] lg:h-[80vh] lg:p-[20px]"
             />
-            <div className="movie-info-container">
-              <h2>{movieData.title}</h2>
-              <p>{movieData.overview}</p>
-              <span>{}</span>
+            <div className="border-b flex flex-wrap p-5 lg:w-[30%] text-white">
+              <h2 className="mt-1 mb-5 text-[#00ADB5] text-3xl">
+                {movieData.title}
+              </h2>
+              <p className="w-full text-gray-400">Sinopsis:</p>
+              <p className="text-white">{movieData.overview}</p>
+              <p className="mt-5 text-gray-400">Calificación: &nbsp;</p>
+              <p className="mt-5">{movieData.vote_average.toFixed(1)}</p>
             </div>
           </>
         ) : (
@@ -62,17 +65,25 @@ const Movie = () => {
             <img
               src={`https://image.tmdb.org/t/p/original${props.poster_path}`}
               alt=""
-              className="backdrop-movie"
+              className="w-full h-[90vh] lg:w-[30%] lg:h-[80vh] lg:p-[20px]"
             />
-            <div className="movie-info-container">
-              <h2>{props.title}</h2>
-              <p>{props.overview}</p>
+            <div className="border-b flex flex-wrap p-5 lg:w-[30%] text-white">
+              <h2 className="mt-1 mb-5 text-[#00ADB5] text-3xl">
+                {props.title}
+              </h2>
+              <p className="w-full text-gray-400">Sinopsis:</p>
+              <p className="text-white">{props.overview}</p>
+              <p className="mt-5 text-gray-400">Calificación: &nbsp;</p>
+              <p className="mt-5">{props.vote_average.toFixed(1)}</p>
             </div>
           </>
         )
       }
-      <div className="flex w-auto h-auto flex-wrap justify-around">
-        <h2 className="w-full align-center">Películas similares</h2>
+      <div className="bg-[#222831] flex w-auto h-auto flex-wrap justify-around">
+        <h2 className="w-full py-2.5 text-[#00ADB5] text-2xl font-bold text-center">
+          Películas similares
+        </h2>
+
         {similarArr.map((movie) => {
           return <CardMovie movieData={movie} key={movie.id} />;
         })}
