@@ -31,8 +31,15 @@ const Favorites = () => {
           })
         ) : (
           <>
-            <h2>Agrega películas a favoritos para tenerlas aquí</h2>
-            <Link to="/">Ver películas</Link>
+            <h2 className="text-xl text-gray-400 w-full text-center mt-10 mb-5">
+              Agrega películas a favoritos para guardarlas aquí
+            </h2>
+            <Link
+              to="/"
+              className="text-white bg-[#00ADB5] hover:bg-[#00f5ff] hover:text-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-1"
+            >
+              Ver películas
+            </Link>
           </>
         )}
       </div>

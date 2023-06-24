@@ -14,6 +14,7 @@ import Favorites from "./views/Favorites";
 import initializeLocalStorage from "./helpers/initializeStorage";
 import Search from "./views/Search";
 import Footer from "./components/Footer";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ function App() {
           <Route path="*" element={<Error />} />
         </Routes>
         <Footer />
+        <ToastContainer position="bottom-center" autoClose={1000} />
       </BrowserRouter>
     </>
   );

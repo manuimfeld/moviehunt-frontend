@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toggleFavorite } from "../helpers/toggleFavorite";
 import { useDispatch } from "react-redux";
 import { FaHeart } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const CardMovie = ({ movieData, favorite }) => {
   const dispatch = useDispatch();
@@ -15,6 +15,7 @@ const CardMovie = ({ movieData, favorite }) => {
   };
 
   const notify = (e) => {
+    toast.dismiss();
     if (e === "Agregar") {
       toast("¡Agregada a favoritos!");
     } else {
@@ -24,7 +25,7 @@ const CardMovie = ({ movieData, favorite }) => {
 
   const handleFavorite = (e) => {
     toggleFavorite(movieData, dispatch);
-    notify(e.target.innerText);
+    notify(e);
   };
 
   return (
@@ -35,29 +36,29 @@ const CardMovie = ({ movieData, favorite }) => {
           src={`https://image.tmdb.org/t/p/original${movieData.poster_path}`}
           alt=""
         />
-        <div className="px-6 py-4 bg-[#393E46] w-[100%] lg:h-[100px] flex flex-wrap justify-start items-center">
+        <div className="px-6 py-4 bg-[#393E46] w-[100%] lg:h-[100px] flex flex-wrap justify-center items-center text-center">
           <div
-            className="duration-300	hover:text-[#00f5ff] h-fit cursor-pointer w-[100%] font-bold text-xl truncate text-[#00ADB5]"
+            className="mb-[10px] duration-300	hover:text-[#00f5ff] h-fit cursor-pointer w-[100%] font-bold text-xl lg:text-lg truncate text-[#00ADB5]"
             onClick={handleClick}
           >
             {movieData.title}
           </div>
-          <p className="absolute top-0 right-0 px-2 bg-[#393E46] text-[#EEEEEE] text-base">
-            {movieData.vote_average.toFixed(1)}
-          </p>
-          <p
-            className="flex justify-between items-center w-[40%] text-[#EEEEEE]"
-            onClick={handleFavorite}
+          <FaHeart
+            className={`${
+              favorite == -1 ? "text-gray-400" : "text-red-700"
+            } cursor-pointer absolute top-0 right-0 bg-[#393E46] b-b-left h-[40px] w-[40px] p-[10px] duration-300 lg:hover:text-red-700 hover:scale-[1.1]`}
+            onClick={
+              favorite == -1
+                ? () => handleFavorite("Agregar")
+                : () => handleFavorite("Eliminar")
+            }
+          />
+          <button
+            className="text-white bg-[#00ADB5] hover:bg-[#00f5ff] hover:text-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-1"
+            onClick={handleClick}
           >
-            {favorite == -1 ? "Agregar" : "Eliminar"}
-            <FaHeart
-              className={` ${
-                favorite == -1 ? "text-gray-400" : "text-red-700"
-              }`}
-            />
-          </p>
-
-          <ToastContainer position="bottom-center" autoClose={2000} />
+            Ver detalles
+          </button>
         </div>
       </div>
     </>

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Error = () => {
   return (
-    <div className="flex h-[calc(100vh-80px)] items-center justify-center p-5 bg-white w-full">
+    <div className="flex h-[calc(100vh-120px)] items-center justify-center p-5 bg-white w-full">
       <div className="text-center">
         <div className="inline-flex rounded-full bg-yellow-100 p-4">
           <div className="rounded-full stroke-yellow-600 bg-yellow-200 p-4">

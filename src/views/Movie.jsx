@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMovieDetailsApi } from "../api/getMovieDetails";
 import { getSimilarMoviesApi } from "../api/getSimilarMovies";
 import CardMovie from "../components/CardMovie";
+import { getFavorite } from "../redux/favoriteSlice";
+import { isFavorite } from "../helpers/toggleFavorite";
 
 const Movie = () => {
   const navigate = useNavigate();
@@ -16,20 +18,21 @@ const Movie = () => {
   const dispatch = useDispatch();
   const { movieData } = useSelector((state) => state.movieData);
   const { similarArr } = useSelector((state) => state.similarArr);
-
-  const handleBack = () => {
-    navigate(-1);
-  };
+  const { favoriteArr } = useSelector((state) => state.favoriteArr);
 
   useEffect(() => {
+    if (localStorage.getItem("favorites") !== null) {
+      dispatch(getFavorite(JSON.parse(localStorage.getItem("favorites"))));
+    }
+
     // when navigating in different routes/pages, it will always appear on top
     window.scrollTo(0, 0);
 
     if (props !== null) {
       getSimilarMoviesApi(id, dispatch);
     } else {
-      return async () => {
-        await getMovieDetailsApi(id, dispatch, navigate);
+      return () => {
+        getMovieDetailsApi(id, dispatch, navigate);
         getSimilarMoviesApi(id, dispatch);
       };
     }
@@ -46,7 +49,7 @@ const Movie = () => {
               alt=""
               className="w-full h-[90vh] lg:w-[30%] lg:h-[80vh] lg:p-[20px]"
             />
-            <div className="border-b flex flex-wrap p-5 lg:w-[30%] text-white">
+            <div className="flex flex-wrap p-5 lg:w-[30%] text-white">
               <h2 className="mt-1 mb-5 text-[#00ADB5] text-3xl">
                 {movieData.title}
               </h2>
@@ -64,7 +67,7 @@ const Movie = () => {
               alt=""
               className="w-full h-[90vh] lg:w-[30%] lg:h-[80vh] lg:p-[20px]"
             />
-            <div className="border-b flex flex-wrap p-5 lg:w-[30%] text-white">
+            <div className="flex flex-wrap p-5 lg:w-[30%] text-white">
               <h2 className="mt-1 mb-5 text-[#00ADB5] text-3xl">
                 {props.title}
               </h2>
@@ -82,7 +85,13 @@ const Movie = () => {
         </h2>
 
         {similarArr.map((movie) => {
-          return <CardMovie movieData={movie} key={movie.id} />;
+          return (
+            <CardMovie
+              movieData={movie}
+              key={movie.id}
+              favorite={isFavorite(movie.id, favoriteArr)}
+            />
+          );
         })}
       </div>
     </main>

@@ -3,10 +3,13 @@ import { getSearchApi } from "../api/getSearch";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import CardMovie from "../components/CardMovie";
+import { getFavorite } from "../redux/favoriteSlice";
+import { isFavorite } from "../helpers/toggleFavorite";
 
 const Search = () => {
   const dispatch = useDispatch();
   const { searchArr } = useSelector((state) => state.searchArr);
+  const { favoriteArr } = useSelector((state) => state.favoriteArr);
 
   //Navigate other route, and get id params url
   const navigate = useNavigate();
@@ -30,6 +33,10 @@ const Search = () => {
       getSearchApi(id, dispatch);
     } else {
       navigate("/search");
+    }
+
+    if (localStorage.getItem("favorites") !== null) {
+      dispatch(getFavorite(JSON.parse(localStorage.getItem("favorites"))));
     }
   }, [dispatch, id, navigate]);
 
@@ -65,7 +72,7 @@ const Search = () => {
             name="text"
             id="text"
             className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Search Movies..."
+            placeholder="Buscar películas..."
             required
           />
           <button
@@ -80,7 +87,13 @@ const Search = () => {
         <div className="flex w-auto h-auto flex-wrap justify-around">
           {searchArr.length > 0
             ? searchArr.map((movie) => {
-                return <CardMovie movieData={movie} key={movie.id} />;
+                return (
+                  <CardMovie
+                    movieData={movie}
+                    key={movie.id}
+                    favorite={isFavorite(movie.id, favoriteArr)}
+                  />
+                );
               })
             : null}
         </div>
